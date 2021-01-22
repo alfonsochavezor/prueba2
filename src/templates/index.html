@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md5">
+        <div class="card card-body">
+            <form action="/add_phone" method="POST">
+                <div class="from-group">
+                    <p>Sucursal</p>
+                    <input type="text"readonly name="Sucursal" placeholder="SUCURSAL" value="Villas del sur" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 'class="form-control">
+                    </div>
+                <div class="from-group">
+                    <input type="text" name="Nombre" placeholder="NOMBRE" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 ' class="form-control">
+                </div>
+                <div class="from-group">
+                    <input type="text" name="Telefono" placeholder="TELEFONO" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control">
+                </div>
+                <div class="from-group">
+                    <input type="text" name="Tipo_Rep" placeholder="TIPO DE REPARACION" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 ' class="form-control">
+                    <div class="from-group">
+                        <input type="text" name="Modelo" placeholder="MODELO" class="form-control">
+                    </div>
+                    <div class="from-group">
+                        <input type="text" name="Imei" placeholder="IMEI" onkeypress='return event.charCode >= 48 && event.charCode <= 57'class="form-control">
+                    </div>
+                   <!--<div class="from-group">
+                        <input type="text" name="Fecha" placeholder="FECHA" class="form-control">
+                    </div>--> 
+                    <div class="from-group">
+                        <input type="text" name="Estadorep" placeholder="ESTADO DE REP" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 'class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">
+                            SAVE
+                        </button>
+                    </div>
+
+
+            </form>
+        </div>
+    </div>
+    <div class="col-md7">
+        <table class="table table.striped table-bordered bg-dark">
+            <thead>
+                <tr>
+                    <td>Guia-celular</td>
+                    <td>Sucursal</td>
+                    <td>Nombre</td>
+                    <td>Numero de telefono</td>
+                    <td>Modelo</td>
+                    <td>Reparacion</td>
+                    <td>Fecha</td>
+                    <td>Estado</td>
+                    <td>Opciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contactos in contacts %}
+                {% if contactos.1 == 'Villas del sur' %}
+                <tr>
+                    
+                
+                    <td>{{contactos.0}}</td>
+                    <td>{{contactos.1}}</td>
+                    <td>{{contactos.2}}</td>
+                    <td>{{contactos.3}}</td>
+                    <td>{{contactos.5}}</td>
+                    <td>{{contactos.4}}</td>
+                    <td>{{contactos.7}}</td>
+                    <td>{{contactos.8}}</td>
+                    <td>
+                        <a href="/edit/{{contactos.0}}" class="btn btn-secondary">Editar</a>
+                        <a href="/delete/{{contactos.0}}" class="btn btn-danger btn_borrar">Eliminar</a>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% with messages = get_flashed_messages() %}
+{% if meesages %}
+{% for mensaje in messages %}
+
+<div class="alert alert-succes alert-dismissible fade show" role="alert">
+    {{messages}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+{% endblock %}
